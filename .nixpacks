@@ -1,0 +1,6 @@
+# .nixpacks file for Railway
+
+# Specify the PHP version (you can change php81 to php82 or any other version if needed)
+install:
+  - php81  # Installer PHP 8.1
+  - composer install  # Installer les dépendances PHP avec Composer

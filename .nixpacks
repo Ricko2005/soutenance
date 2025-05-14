@@ -2,5 +2,9 @@
 
 # Specify the PHP version (you can change php81 to php82 or any other version if needed)
 install:
-  - php81  # Installer PHP 8.1
-  - composer install  # Installer les dépendances PHP avec Composer
+  - php82  # Installer PHP 8.2
+  - composer install --ignore-platform-reqs
+  - npm ci
+  - cp config/railway/nginx.conf /etc/nginx/nginx.conf  # Copier la configuration Nginx
+  - cp config/railway/php-fpm.conf /etc/php-fpm.d/www.conf  # Copier la configuration PHP-FPM
+

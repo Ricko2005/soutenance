@@ -1,10 +1,8 @@
 # .nixpacks file for Railway
 
-# Specify the PHP version (you can change php81 to php82 or any other version if needed)
 install:
-  - php82  # Installer PHP 8.2
+  - php80  # Installer PHP 8.0
   - composer install --ignore-platform-reqs
   - npm ci
-  - cp config/railway/nginx.conf /etc/nginx/nginx.conf  # Copier la configuration Nginx
-  - cp config/railway/php-fpm.conf /etc/php-fpm.d/www.conf  # Copier la configuration PHP-FPM
-
+  - cp config/railway/nginx.conf /etc/nginx/nginx.conf  # Copier le fichier de configuration Nginx
+  - cp config/railway/php-fpm.conf /etc/php-fpm.d/www.conf  # Copier le fichier de configuration PHP-FPM

@@ -791,7 +791,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 </script>
-@endsection@extends('layouts.app')
+@endsection
 
 @section('content')
 <!-- En-tête Royal -->

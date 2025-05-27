@@ -379,7 +379,7 @@ align-items: center}
         <div class="container">
             <!-- Logo à gauche -->
             <a class="navbar-brand" href="{{ url('/') }}">
-                <img src="{{ asset('images/logo.png') }}" alt="Logo" style="width: 150px;"> <!-- Remplacez par le chemin de votre logo -->
+                <img src="{{ asset('images/logo.png') }}" alt="Logo" style="height: 100px;"> <!-- Remplacez par le chemin de votre logo -->
             </a>
             
             <!-- Bouton navbar-toggler pour mobile -->

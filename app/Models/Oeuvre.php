@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Oeuvre extends Model
 {
@@ -11,9 +12,13 @@ class Oeuvre extends Model
 
     protected $fillable = [
         'titre',
-        'auteur',
-        'prix',
         'image',
         'description',
+        'artiste_id'
     ];
+
+    public function artiste(): BelongsTo
+    {
+        return $this->belongsTo(Artiste::class);
+    }
 }

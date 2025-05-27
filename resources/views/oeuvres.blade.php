@@ -79,7 +79,7 @@
                                     data-bs-target="#oeuvreModal{{ $index }}">
                                 Voir détails
                             </button>
-                            <a href="{{ route('payer.oeuvre', ['id' => $oeuvre->id]) }}" 
+                            <a href="{{ route('paiement.form', ['id' => $oeuvre->id]) }}" 
                                class="btn btn-danger btn-sm rounded-pill px-3 shadow-sm">
                                 Acheter
                             </a>
@@ -120,7 +120,7 @@
                                         </div>
                                         
                                         <div class="d-flex gap-2">
-                                            <a href="{{ route('payer.oeuvre', ['id' => $oeuvre->id]) }}" 
+                                            <a href="{{ route('paiement.form', ['id' => $oeuvre->id]) }}" 
                                                class="btn btn-danger rounded-pill px-4 shadow-sm">
                                                Procéder à l'achat
                                             </a>

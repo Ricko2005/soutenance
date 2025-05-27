@@ -6,42 +6,48 @@
     <!-- Section Bannière -->
     <section class="banner" id="principal-banniere">
         <div class="container-fluid p-0">
-            <img src="{{ asset('images/expo.jpg') }}" alt="Bannière" class="img-fluid w-100">
+<img src="{{ asset('images/banniere.png') }}" alt="" class="img-fluid w-100">
         </div>
     </section>
 
     
 <!-- Section Qui sommes-nous ? -->
-<section class="bg-white py-5">
+<section class="bg-white py-3 py-md-5">
     <div class="container">
         <div class="row align-items-center">
-            <div class="col-md-6 col-12 text-center text-md-start">
-                <h2 class="fw-bold text-dark mb-4 display-5" id="grotesk-title">
+            <div class="col-md-6 col-12 order-2 order-md-1">
+                <h2 class="fw-bold text-dark mb-3 mb-md-4 display-5 mobile-title" id="grotesk-title">
                     Qui sommes-nous ?
                 </h2>
 
-                <p class="text-lg text-muted mb-4 px-2 px-md-0">
-                    <strong class="text-danger">" To Tché Nou "</strong> est une plateforme dédiée à l’exposition des trésors royaux du Bénin, un site conçu pour faire rayonner au monde entier l’héritage culturel exceptionnel du pays. À travers cette initiative, le site s'engage à <strong>valoriser et sauvegarder le patrimoine du Bénin</strong> en présentant ses trésors les plus précieux, témoins d'une histoire riche et fascinante.
-                    <br><br>
-                    Au-delà de la mise en valeur de ces trésors, <strong class="text-danger">To Tché Nou</strong> a pour objectif de <strong>donner une visibilité aux artistes béninois</strong>, en particulier les jeunes talents. Le site offre un espace d'exposition pour leurs œuvres, permettant à la fois de promouvoir la créativité locale et de contribuer à l’émergence d’une nouvelle scène artistique béninoise.
-                    <br><br>
-                    En rejoignant <strong class="text-danger">To Tché Nou</strong>, vous participez à une aventure où l'art et l'histoire du Bénin se rencontrent pour laisser une empreinte durable et inspirante sur le monde.
+                <p class="text-mobile text-lg text-muted mb-3 mb-md-4 px-2 px-md-0">
+                    <strong class="text-danger">" To Tché Nou "</strong> est une plateforme dédiée à l'exposition des trésors royaux du Bénin, un site conçu pour faire rayonner au monde entier l'héritage culturel exceptionnel du pays.
+                    <br><br class="d-none d-md-block">
+                    À travers cette initiative, le site s'engage à <strong>valoriser et sauvegarder le patrimoine du Bénin</strong> en présentant ses trésors les plus précieux, témoins d'une histoire riche et fascinante.
+                    <br><br class="d-none d-md-block">
+                    Au-delà de la mise en valeur de ces trésors, <strong class="text-danger">To Tché Nou</strong> a pour objectif de <strong>donner une visibilité aux artistes béninois</strong>, en particulier les jeunes talents.
                 </p>
 
-                <div class="mb-4 mb-md-0">
-                    <a href="{{ url('/a-propos') }}" class="btn btn-danger py-3 px-4 rounded" id="plus">
+                <div class="mb-4 mb-md-0 d-flex flex-wrap gap-2 gap-md-3">
+                    <a href="{{ url('/a-propos') }}" class="btn btn-danger py-2 py-md-3 px-3 px-md-4 rounded mobile-btn" id="plus">
                         En savoir plus
+                    </a>
+
+                    <a href="{{ route('educatif.index') }}" class="btn btn-outline-danger py-2 py-md-3 px-3 px-md-4 rounded mobile-btn">
+                        <i class="fas fa-graduation-cap me-2"></i>Espace Éducatif
                     </a>
                 </div>
             </div>
 
             <!-- Colonne image -->
-            <div class="col-md-6 col-12 mt-4 mt-md-0 text-center" data-aos="fade-left" data-aos-duration="1000" data-aos-easing="ease-in-out" data-aos-delay="200">
-                <img src="{{ asset('images/Trones.png') }}" alt="Exposition des Trésors Royaux" class="img-fluid rounded ">
+            <div class="col-md-6 col-12 order-1 order-md-2 mb-3 mb-md-0 text-center" data-aos="fade-left" data-aos-duration="1000" data-aos-easing="ease-in-out" data-aos-delay="200">
+                <img src="{{ asset('images/Trones.png') }}" alt="Exposition des Trésors Royaux" class="img-fluid rounded mobile-img" style="max-height: 400px;">
             </div>
         </div>
     </div>
 </section>
+
+        
 
     <!-- Section Œuvres Restituées - Version améliorée -->
     <section class="bg-dark text-white py-6 position-relative overflow-hidden">
@@ -175,10 +181,14 @@
       </div>
   
       <div class="artist-carousel-wrapper d-flex flex-wrap justify-content-center">
-        @foreach(['Hugues AHISSOU', 'Jean Dossa', 'Idriss Zinsou'] as $artist)
+        @foreach([
+            ['name' => 'Eulogee Glèlè', 'image' => 'eulogee.jpg'],
+            ['name' => 'Kifouli Dossou', 'image' => 'kifouli.jpg'],
+            ['name' => 'Marius Dansou', 'image' => 'maruis.jpg']
+        ] as $artist)
           <div class="artist-card" data-aos="zoom-in" data-aos-delay="{{ $loop->index * 100 }}">
             <div class="artist-img-wrapper">
-              <img src="{{ asset('images/image2'.($loop->index + 3).'.png') }}" alt="{{ $artist }}" class="artist-img">
+              <img src="{{ asset('images/' . $artist['image']) }}" alt="{{ $artist['name'] }}" class="artist-img">
               <div class="artist-social">
                 <a href="#"><i class="fab fa-instagram"></i></a>
                 <a href="#"><i class="fab fa-facebook-f"></i></a>
@@ -186,64 +196,63 @@
               </div>
             </div>
             <div class="artist-info">
-              <h5 class="artist-name">{{ $artist }}</h5>
+              <h5 class="artist-name">{{ $artist['name'] }}</h5>
               <p class="artist-specialty">Sculpture / Peinture</p>
-              <a href="#" class="btn btn-sm btn-outline-danger">Voir portfolio</a>
+                                  <a href="{{ url('/artistes') }}" class="btn btn-sm btn-outline-danger">Voir portfolio</a>
             </div>
           </div>
         @endforeach
       </div>
     </div>
-  </section>
+</section>
   
 
 
 
 
 
+<!-- Section Actualités - Design moderne -->
+<section class="news-section py-6 bg-light">
+    <div class="container">
+        <div class="section-header text-center mb-5" data-aos="fade-down">
+            <span class="section-subtitle text-danger">Événements</span>
+            <h2 class="section-title display-4 fw-bold mb-3" id="grotesk-title3">Actualités.</h2>
+            <div class="title-divider bg-danger mx-auto"></div>
+            <p class="lead mx-auto mt-4" style="max-width: 700px;">
+                Restez informés des dernières nouvelles concernant le patrimoine culturel béninois.
+            </p>
+        </div>
 
-    <!-- Section Actualités - Dpesign moderne -->
-    <section class="news-section py-6 bg-light">
-        <div class="container">
-            <div class="section-header text-center mb-5" data-aos="fade-down">
-                <span class="section-subtitle text-danger">Événements</span>
-                <h2 class="section-title display-4 fw-bold mb-3" id="grotesk-title3">Actualités.</h2>
-                <div class="title-divider bg-danger mx-auto"></div>
-                <p class="lead mx-auto mt-4" style="max-width: 700px;">
-                    Restez informés des dernières nouvelles concernant le patrimoine culturel béninois.
-                </p>
-            </div>
-
-            <div class="row g-4">
-                @foreach([
-                    ['Événement Culturel à Cotonou', 'two.jpg', 'Un événement majeur célébrant la culture béninoise'],
-                    ['Retour des Trésors Royaux', 'blanc.jpg', 'Le Bénin célèbre la restitution de ses trésors'],
-                    ['Exposition d\'Art Contemporain', 'fondation.jpg', 'Œuvres novatrices de jeunes artistes']
-                ] as $news)
-                <div class="col-md-4" data-aos="fade-up" data-aos-delay="{{ $loop->index * 100 }}">
-                    <div class="news-card">
-                        <div class="news-img-wrapper">
-                            <img src="{{ asset('images/'.$news[1]) }}" alt="{{ $news[0] }}" class="news-img">
-                            <div class="news-date">
-                                <span class="news-day">15</span>
-                                <span class="news-month">Nov</span>
-                            </div>
-                        </div>
-                        <div class="news-body">
-                            <div class="news-meta">
-                                <span class="news-category text-danger">Événement</span>
-                                <span class="news-comments"><i class="far fa-comment-alt"></i> 5</span>
-                            </div>
-                            <h5 class="news-title">{{ $news[0] }}</h5>
-                            <p class="news-excerpt">{{ $news[2] }}</p>
-                            <a href="#" class="news-link">Lire la suite <i class="fas fa-arrow-right"></i></a>
+        <div class="row g-4">
+            @foreach([
+                ['Événement Culturel à Cotonou', 'two.jpg', 'Un événement majeur célébrant la culture béninoise', 'blog'],
+                ['Retour des Trésors Royaux', 'blanc.jpg', 'Le Bénin célèbre la restitution de ses trésors', 'bloge'],
+                ['Exposition d\'Art Contemporain', 'fondation.jpg', 'Œuvres novatrices de jeunes artistes', 'blog2']
+            ] as $news)
+            <div class="col-md-4" data-aos="fade-up" data-aos-delay="{{ $loop->index * 100 }}">
+                <div class="news-card">
+                    <div class="news-img-wrapper">
+                        <img src="{{ asset('images/'.$news[1]) }}" alt="{{ $news[0] }}" class="news-img">
+                        <div class="news-date">
+                            <span class="news-day">15</span>
+                            <span class="news-month">Nov</span>
                         </div>
                     </div>
+                    <div class="news-body">
+                        <div class="news-meta">
+                            <span class="news-category text-danger">Événement</span>
+                            <span class="news-comments"><i class="far fa-comment-alt"></i> 5</span>
+                        </div>
+                        <h5 class="news-title">{{ $news[0] }}</h5>
+                        <p class="news-excerpt">{{ $news[2] }}</p>
+                        <a href="{{ url('/'.$news[3]) }}" class="news-link">Lire la suite <i class="fas fa-arrow-right"></i></a>
+                    </div>
                 </div>
-                @endforeach
             </div>
+            @endforeach
         </div>
-    </section>
+    </div>
+</section>
 
  
     <!-- Section Newsletter -->
@@ -265,6 +274,7 @@
         </div>
 
     </section>
+
 <!-- Chatbot Art Bénin -->
 <div class="chatbot-wrapper">
     <div class="chatbot-container" id="chatbotContainer">
@@ -823,7 +833,56 @@
         letter-spacing: -0.5px;
         line-height: 1.1;
     }
+/* Styles pour la section Qui sommes-nous en mobile */
+@media (max-width: 400px) {
+    .mobile-title {
+        font-size: 1.5rem !important;
+        margin-bottom: 0.8rem !important;
+        line-height: 1.3;
+        text-align: center;
+    }
+    
+    .text-mobile {
+        font-size: 0.85rem !important;
+        line-height: 1.5;
+        margin-bottom: 1rem !important;
+        padding: 0 0.5rem !important;
+        text-align: justify;
+    }
+    
+    .mobile-btn {
+        padding: 0.5rem 1rem !important;
+        font-size: 0.8rem !important;
+        flex: 1 0 100%;
+        margin-bottom: 0.5rem;
+    }
+    
+    .mobile-img {
+        max-height: 200px !important;
+        margin-bottom: 1rem;
+    }
+    
+    .py-3 {
+        padding-top: 1.5rem !important;
+        padding-bottom: 1.5rem !important;
+    }
+    
+    .gap-2 {
+        gap: 0.5rem !important;
+    }
+}
 
+@media (min-width: 401px) and (max-width: 768px) {
+    .mobile-title {
+        font-size: 2rem !important;
+    }
+    
+    .text-mobile {
+        font-size: 1rem !important;
+    }
+    
+    
+}
     #grotesk-title-2 {
         text-transform: uppercase;
         font-family: 'Space Grotesk', sans-serif;

@@ -12,10 +12,8 @@ export default defineConfig({
         }),
     ],
     server: {
-        host: '0.0.0.0', // Écouter sur toutes les interfaces réseau
-        port: process.env.PORT || 3000, // Utilise la variable d'environnement PORT si définie
-        preview: {
-            allowedHosts: ['soutenance-5.onrender.com', 'localhost'], // Ajoute l'hôte autorisé
-        },
+        host: '0.0.0.0',  // Permet de lier l'app sur toutes les interfaces réseau
+        port: process.env.PORT || 3000,  // Utilise le port de Render (ou un port par défaut)
+        allowedHosts: ['localhost', '127.0.0.1', 'soutenance-5.onrender.com'], // Ajoute les hôtes autorisés
     },
 });

@@ -30,8 +30,8 @@ return [
         'secret' => env('AWS_SECRET_ACCESS_KEY'),
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
- 'fedapay' => [
-        'api_key' => env('FEDAPAY_API_KEY'), // Gardez exactement cette écriture
-        'mode' => env('FEDAPAY_MODE', 'sandbox') // Mode sandbox par défaut
-    ],
+'fedapay' => [
+    'api_key' => env('FEDAPAY_API_KEY'),
+    'mode' => env('FEDAPAY_MODE', 'sandbox'), // 'live' en production
+],
 ];

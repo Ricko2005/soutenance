@@ -10,12 +10,14 @@ class Oeuvre extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'titre',
-        'image',
-        'description',
-        'artiste_id'
-    ];
+   protected $fillable = [
+    'titre',
+    'auteur', // Ajoutez ceci
+    'prix',   // Ajoutez ceci
+    'image',
+    'description'
+];
+// Supprimez la relation artiste() si inutile
 
     public function artiste(): BelongsTo
     {

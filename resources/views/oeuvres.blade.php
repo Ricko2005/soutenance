@@ -79,10 +79,10 @@
                                     data-bs-target="#oeuvreModal{{ $index }}">
                                 Voir détails
                             </button>
-                            <a href="{{ route('paiement.form', ['id' => $oeuvre->id]) }}" 
-                               class="btn btn-danger btn-sm rounded-pill px-3 shadow-sm">
-                                Acheter
-                            </a>
+<a href="{{ route('paiement.form', ['oeuvre' => $oeuvre->id]) }}"class="btn btn-outline px-3 py-2 rounded-4" id="buy">
+    Acheter
+</a>                         
+
                         </div>
                     </div>
                 </div>
@@ -120,10 +120,9 @@
                                         </div>
                                         
                                         <div class="d-flex gap-2">
-                                            <a href="{{ route('paiement.form', ['id' => $oeuvre->id]) }}" 
-                                               class="btn btn-danger rounded-pill px-4 shadow-sm">
-                                               Procéder à l'achat
-                                            </a>
+<a href="{{ route('paiement.form', ['oeuvre' => $oeuvre->id]) }}"class="btn btn-outline px-3 py-2 rounded-4" id="buy">
+    Acheter
+</a>                                        
                                             <button type="button" class="btn btn-outline-secondary rounded-pill px-4" data-bs-dismiss="modal">
                                                 Continuer à explorer
                                             </button>
@@ -176,6 +175,12 @@
     
     #color-artiste {
         background-color: #8a1714;
+    }
+    #buy{
+                background-color: #8a1714;
+               
+                color: #fff
+
     }
     
     #btn-explore {

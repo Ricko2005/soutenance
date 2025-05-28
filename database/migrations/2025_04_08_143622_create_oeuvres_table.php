@@ -13,7 +13,7 @@ return new class extends Migration
             $table->string('titre');
             $table->string('image'); // Chemin vers l'image
             $table->text('description');
-            $table->foreignId('artiste_id')->constrained()->onDelete('cascade');
+    $table->string('auteur'); // Champ simple plutôt que clé étrangère
             $table->timestamps();
         });
     }

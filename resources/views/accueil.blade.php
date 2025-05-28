@@ -276,6 +276,7 @@
     </section>
 
 <!-- Chatbot Art Bénin -->
+<!-- Chatbot Art Bénin -->
 <div class="chatbot-wrapper">
     <div class="chatbot-container" id="chatbotContainer">
       <div class="chatbot-header bg-danger text-white">
@@ -326,15 +327,21 @@
         <span class="visually-hidden">Nouveau message</span>
       </span>
     </button>
-  </div>
-  
+</div>
   <style>
+    .navbar {
+    position: relative;
+    z-index: 1100; /* Supérieur au chatbot */
+}
+
+
   /* Style principal */
   .chatbot-wrapper {
     position: fixed;
     bottom: 30px;
     right: 30px;
-    z-index: 1050;
+      z-index: 1000;
+   
   }
   
   .chatbot-container {
@@ -555,7 +562,7 @@
     const userInput = document.getElementById('userInput');
     const sendBtn = document.getElementById('sendBtn');
     
-    // Base de connaissances avancée
+    // Base de connaissances avancée avec commission à 5%
     const knowledgeBase = {
       "explorer": {
         response: `Explorez notre collection avec ces options :<br><br>
@@ -587,6 +594,8 @@
         response: `Pour les artistes béninois :<br><br>
                   📱 <strong>Via WhatsApp</strong> : Envoyez photos + description au +229 62 88 02 63<br>
                   ⏳ <strong>Validation</strong> : Sous 48h par notre comité<br>
+                                <strong>Formats acceptés</strong> : Images en JPG uniquement<br>
+
                   🎨 <strong>Publication</strong> : Avec votre profil artiste<br><br>
                   <span class="text-danger">Gratuit pendant le lancement !</span>`,
         quickReplies: [
@@ -642,7 +651,7 @@
                   <table class="table table-sm">
                     <tr>
                       <td>Commission plateforme</td>
-                      <td class="text-end">15%</td>
+                      <td class="text-end">5%</td>
                     </tr>
                     <tr>
                       <td>Frais Mobile Money</td>
@@ -654,7 +663,7 @@
                     </tr>
                     <tr class="fw-bold">
                       <td>Total pour une œuvre à 100.000 FCFA</td>
-                      <td class="text-end">~83.000 FCFA net</td>
+                      <td class="text-end">~92.000 FCFA net</td>
                     </tr>
                   </table>`,
         quickReplies: [
@@ -665,19 +674,37 @@
       }
     };
     
-    // Gestion de l'ouverture/fermeture
-    launcher.addEventListener('click', () => {
-      chatbot.classList.add('active');
-      launcher.style.display = 'none';
+    // Fonction pour ajouter un message
+    function addMessage(content, sender) {
+      const msgDiv = document.createElement('div');
+      msgDiv.className = `chat-message ${sender}-message`;
+      msgDiv.innerHTML = `<div class="message-content">${content}</div>`;
+      chatMessages.appendChild(msgDiv);
       scrollToBottom();
-    });
+    }
     
-    closeBtn.addEventListener('click', () => {
-      chatbot.classList.remove('active');
-      launcher.style.display = 'flex';
-    });
+    // Fonction pour ajouter des réponses rapides
+    function addQuickReplies(replies) {
+      const quickDiv = document.createElement('div');
+      quickDiv.className = 'quick-actions mt-2';
+      
+      replies.forEach(reply => {
+        const btn = document.createElement('button');
+        btn.className = 'btn btn-sm btn-outline-light quick-action';
+        btn.textContent = reply;
+        btn.onclick = function() {
+          userInput.value = reply;
+          sendMessage();
+        };
+        quickDiv.appendChild(btn);
+      });
+      
+      const lastMessage = chatMessages.lastElementChild.querySelector('.message-content');
+      lastMessage.appendChild(quickDiv);
+      scrollToBottom();
+    }
     
-    // Envoyer un message
+    // Fonction pour envoyer un message
     function sendMessage() {
       const message = userInput.value.trim();
       if (!message) return;
@@ -699,60 +726,40 @@
       }, 1500);
     }
     
-    // Gestion des événements
-    sendBtn.addEventListener('click', sendMessage);
-    userInput.addEventListener('keypress', (e) => e.key === 'Enter' && sendMessage());
-    
-    // Actions rapides
-    document.addEventListener('click', (e) => {
-      // Questions suggérées
-      if (e.target.classList.contains('suggested-question')) {
-        userInput.value = e.target.getAttribute('data-question');
-        sendMessage();
-      }
+    // Fonction pour générer une réponse
+    function generateResponse(message) {
+      const msg = message.toLowerCase();
       
-      // Actions rapides
-      if (e.target.classList.contains('quick-action')) {
-        const action = e.target.getAttribute('data-action');
-        showTypingIndicator();
-        
-        setTimeout(() => {
-          hideTypingIndicator();
-          const response = knowledgeBase[action];
-          addMessage(response.response, 'bot');
-          addQuickReplies(response.quickReplies);
-        }, 1000);
+      if (msg.includes('explorer') || msg.includes('œuvre') || msg.includes('voir')) {
+        return knowledgeBase.explorer;
+      } else if (msg.includes('acheter') || msg.includes('commander') || msg.includes('achat')) {
+        return knowledgeBase.acheter;
+      } else if (msg.includes('soumettre') || msg.includes('proposer') || msg.includes('artiste')) {
+        return knowledgeBase.soumettre;
+      } else if (msg.includes('paiement') || msg.includes('payer') || msg.includes('feda')) {
+        return knowledgeBase.paiement;
+      } else if (msg.includes('contact') || msg.includes('appeler') || msg.includes('email')) {
+        return knowledgeBase.contact;
+      } else if (msg.includes('commission') || msg.includes('frais') || msg.includes('tarif')) {
+        return knowledgeBase.commission;
+      } else {
+        return {
+          response: `Je n'ai pas compris votre demande. Voici ce que je peux expliquer :<br><br>
+                    <div class="d-flex flex-wrap gap-2">
+                      <button class="btn btn-sm btn-outline-light quick-action" onclick="document.querySelector('.quick-action[data-action=\'explorer\']').click()">Explorer</button>
+                      <button class="btn btn-sm btn-outline-light quick-action" onclick="document.querySelector('.quick-action[data-action=\'acheter\']').click()">Acheter</button>
+                      <button class="btn btn-sm btn-outline-light quick-action" onclick="document.querySelector('.quick-action[data-action=\'soumettre\']').click()">Soumettre</button>
+                    </div>`,
+          quickReplies: [
+            "Comment créer un compte ?",
+            "Où voir les événements ?",
+            "Qui sont les artistes ?"
+          ]
+        };
       }
-    });
+    }
     
     // Fonctions utilitaires
-    function addMessage(content, sender) {
-      const msgDiv = document.createElement('div');
-      msgDiv.className = `chat-message ${sender}-message`;
-      msgDiv.innerHTML = `<div class="message-content">${content}</div>`;
-      chatMessages.appendChild(msgDiv);
-      scrollToBottom();
-    }
-    
-    function addQuickReplies(replies) {
-      const lastMsg = chatMessages.lastElementChild;
-      const contentDiv = lastMsg.querySelector('.message-content');
-      
-      const quickDiv = document.createElement('div');
-      quickDiv.className = 'quick-actions mt-2';
-      
-      replies.forEach(reply => {
-        const btn = document.createElement('button');
-        btn.className = 'btn btn-sm btn-outline-danger quick-action';
-        btn.textContent = reply;
-        btn.setAttribute('data-question', reply);
-        quickDiv.appendChild(btn);
-      });
-      
-      contentDiv.appendChild(quickDiv);
-      scrollToBottom();
-    }
-    
     function showTypingIndicator() {
       const typingDiv = document.createElement('div');
       typingDiv.className = 'typing-indicator';
@@ -775,45 +782,53 @@
       chatMessages.scrollTop = chatMessages.scrollHeight;
     }
     
-    function generateResponse(message) {
-      const msg = message.toLowerCase();
-      
-      if (msg.includes('explorer') || msg.includes('œuvre') || msg.includes('voir')) {
-        return knowledgeBase.explorer;
-      } else if (msg.includes('acheter') || msg.includes('commander') || msg.includes('achat')) {
-        return knowledgeBase.acheter;
-      } else if (msg.includes('soumettre') || msg.includes('proposer') || msg.includes('artiste')) {
-        return knowledgeBase.soumettre;
-      } else if (msg.includes('paiement') || msg.includes('payer') || msg.includes('feda')) {
-        return knowledgeBase.paiement;
-      } else if (msg.includes('contact') || msg.includes('appeler') || msg.includes('email')) {
-        return knowledgeBase.contact;
-      } else if (msg.includes('commission') || msg.includes('frais') || msg.includes('tarif')) {
-        return knowledgeBase.commission;
-      } else {
-        return {
-          response: `Je n'ai pas compris votre demande. Voici ce que je peux expliquer :<br><br>
-                    <div class="d-flex flex-wrap gap-2">
-                      <button class="btn btn-sm btn-outline-danger quick-action" data-action="explorer">Explorer</button>
-                      <button class="btn btn-sm btn-outline-danger quick-action" data-action="acheter">Acheter</button>
-                      <button class="btn btn-sm btn-outline-danger quick-action" data-action="soumettre">Soumettre</button>
-                      <button class="btn btn-sm btn-outline-danger quick-action" data-action="paiement">Paiements</button>
-                    </div>`,
-          quickReplies: [
-            "Comment créer un compte ?",
-            "Où voir les événements ?",
-            "Qui sont les artistes ?"
-          ]
-        };
-      }
-    }
+    // Gestion des événements
+    launcher.addEventListener('click', () => {
+      chatbot.classList.add('active');
+      launcher.style.display = 'none';
+      scrollToBottom();
+    });
     
-    // Animation d'apparition progressive
+    closeBtn.addEventListener('click', () => {
+      chatbot.classList.remove('active');
+      launcher.style.display = 'flex';
+    });
+    
+    sendBtn.addEventListener('click', sendMessage);
+    userInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') sendMessage();
+    });
+    
+    // Gestion des actions rapides
+    document.querySelectorAll('.quick-action').forEach(button => {
+      button.addEventListener('click', function() {
+        const action = this.getAttribute('data-action');
+        showTypingIndicator();
+        
+        setTimeout(() => {
+          hideTypingIndicator();
+          const response = knowledgeBase[action];
+          addMessage(response.response, 'bot');
+          addQuickReplies(response.quickReplies);
+        }, 1000);
+      });
+    });
+    
+    // Gestion des questions suggérées
+    document.querySelectorAll('.suggested-question').forEach(button => {
+      button.addEventListener('click', function() {
+        const question = this.getAttribute('data-question');
+        userInput.value = question;
+        sendMessage();
+      });
+    });
+    
+    // Animation d'apparition
     setTimeout(() => {
       launcher.style.transform = 'scale(1.2)';
       setTimeout(() => launcher.style.transform = 'scale(1)', 300);
     }, 3000);
-  });
+});
   </script>
     <!-- Styles personnalisés -->
     <style>

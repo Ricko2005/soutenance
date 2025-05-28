@@ -39,12 +39,13 @@ Route::get('/blog', [BlogController::class, 'index'])->name('blog.index');
 Route::resource('oeuvres', OeuvresController::class);
 
 // Paiement
-Route::prefix('paiement')->group(function () {
-    Route::get('/{id}', [PaiementController::class, 'showForm'])->name('paiement.form');
-    Route::post('/initier', [PaiementController::class, 'initierPaiement'])->name('paiement.initiate');
-    Route::post('/callback', [PaiementController::class, 'handleCallback'])->name('paiement.callback');
-});
+// Route pour afficher le formulaire
+Route::get('/paiement/{oeuvre}', [PaiementController::class, 'showForm'])
+     ->name('paiement.form');
 
+// Autres routes nécessaires
+Route::post('/paiement/initier', [PaiementController::class, 'initierPaiement'])
+     ->name('paiement.initier');
 // Auteur
 Route::get('/auteur/{id}', [AuteurController::class, 'show'])->name('auteur.show');
 
